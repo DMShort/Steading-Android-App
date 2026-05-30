@@ -1,10 +1,15 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { api } from "../services/api";
-import type { User, Homestead } from "../types";
+import { api, loadStoredToken, clearToken } from "../services/api";
+import type { Homestead } from "../types";
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+}
 
 interface AuthState {
-  user: User | null;
+  user: AuthUser | null;
   homestead: Homestead | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
@@ -24,37 +29,46 @@ export function useAuth() {
 }
 
 export function useAuthState(): AuthState {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [homestead, setHomestead] = useState<Homestead | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    checkSession();
+    restore();
   }, []);
 
-  async function checkSession() {
+  async function restore() {
     try {
-      const session = await api.auth.session() as any;
-      if (session?.user) {
-        setUser(session.user);
-        const hs = await api.homestead.get() as Homestead;
-        setHomestead(hs);
+      const token = await loadStoredToken();
+      if (!token) return;
+      const hs = await api.homestead.get() as Homestead;
+      // Decode user info from the token (JWT payload is base64url)
+      const payload = JSON.parse(
+        Buffer.from(token.split(".")[1], "base64").toString()
+      );
+      const dbUser = await api.auth.session() as any;
+      if (dbUser?.user) {
+        setUser({ id: dbUser.user.id, name: dbUser.user.name, email: dbUser.user.email });
+      } else {
+        setUser({ id: payload.userId, name: "", email: "" });
       }
+      setHomestead(hs);
     } catch {
-      // No active session
+      await clearToken();
     } finally {
       setLoading(false);
     }
   }
 
   async function login(email: string, password: string) {
-    // React Native auth uses web session via cookie
-    // Use the API directly and store session token
-    await checkSession();
+    const data = await api.auth.mobileLogin(email, password);
+    setUser({ id: data.userId, name: data.name, email: data.email });
+    const hs = await api.homestead.get() as Homestead;
+    setHomestead(hs);
   }
 
   async function logout() {
-    await AsyncStorage.removeItem("session");
+    await clearToken();
     setUser(null);
     setHomestead(null);
   }

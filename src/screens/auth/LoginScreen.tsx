@@ -10,6 +10,7 @@ import {
   Platform,
   Alert,
 } from "react-native";
+import { useAuth } from "../../hooks/useAuth";
 
 interface Props {
   onLoginSuccess: () => void;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export function LoginScreen({ onLoginSuccess, onGoToRegister }: Props) {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,9 +30,7 @@ export function LoginScreen({ onLoginSuccess, onGoToRegister }: Props) {
     }
     setLoading(true);
     try {
-      // TODO: implement session-based auth with the web backend
-      // The web app uses NextAuth — mobile will need a credentials flow
-      // or a dedicated mobile token endpoint
+      await login(email.trim().toLowerCase(), password);
       onLoginSuccess();
     } catch (err: any) {
       Alert.alert("Login failed", err.message ?? "Please try again.");
