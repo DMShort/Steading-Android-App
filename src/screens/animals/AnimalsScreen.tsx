@@ -98,7 +98,7 @@ export function AnimalsScreen() {
         contentContainerStyle={styles.content}
         data={sections}
         keyExtractor={([species]) => species}
-        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#059669" />}
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#d97706" />}
         ListHeaderComponent={
           <Text style={styles.heading}>Animals ({animals.length})</Text>
         }
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   fab: {
     position: "absolute", bottom: 24, right: 24,
     width: 56, height: 56, borderRadius: 28,
-    backgroundColor: "#059669", alignItems: "center", justifyContent: "center",
+    backgroundColor: "#d97706", alignItems: "center", justifyContent: "center",
     shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 4,
     elevation: 5,
   },

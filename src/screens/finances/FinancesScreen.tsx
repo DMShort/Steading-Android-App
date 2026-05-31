@@ -145,7 +145,7 @@ export function FinancesScreen() {
         contentContainerStyle={styles.content}
         data={allTransactions}
         keyExtractor={t => t.id}
-        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#059669" />}
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#d97706" />}
         ListHeaderComponent={
           <View>
             <Text style={styles.heading}>Finances</Text>
@@ -223,9 +223,9 @@ const styles = StyleSheet.create({
   subheading: { fontSize: 13, color: "#78716c", marginBottom: 12 },
   summaryRow: { flexDirection: "row", gap: 8, marginBottom: 16 },
   summaryCard: { flex: 1, borderRadius: 12, padding: 12, borderWidth: 1 },
-  incomeCard: { backgroundColor: "#f0fdf4", borderColor: "#bbf7d0" },
+  incomeCard: { backgroundColor: "#f0fdf4", borderColor: "#fde68a" },
   expenseCard: { backgroundColor: "#fff1f2", borderColor: "#fecdd3" },
-  netPositive: { backgroundColor: "#f0fdf4", borderColor: "#bbf7d0" },
+  netPositive: { backgroundColor: "#f0fdf4", borderColor: "#fde68a" },
   netNegative: { backgroundColor: "#fff1f2", borderColor: "#fecdd3" },
   summaryLabel: { fontSize: 11, color: "#78716c", fontWeight: "500", marginBottom: 4 },
   summaryAmount: { fontSize: 16, fontWeight: "700" },

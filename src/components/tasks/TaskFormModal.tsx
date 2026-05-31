@@ -3,6 +3,7 @@ import {
   Modal, View, Text, TextInput, TouchableOpacity, ScrollView,
   StyleSheet, KeyboardAvoidingView, Platform,
 } from "react-native";
+import type { Member } from "../../types";
 
 const CATEGORIES = ["garden", "animals", "inventory", "general"] as const;
 const PRIORITIES = ["low", "medium", "high"] as const;
@@ -16,26 +17,33 @@ const PRIORITY_COLOURS: Record<string, string> = {
 
 interface Props {
   visible: boolean;
+  members: Member[];
   onSave: (data: {
     title: string;
     category: string;
     priority: string;
     dueDate?: string;
     description?: string;
+    assignedToId?: string;
   }) => void;
   onClose: () => void;
 }
 
-export function TaskFormModal({ visible, onSave, onClose }: Props) {
+function memberLabel(m: Member) {
+  return m.displayName ?? m.user.name ?? m.user.email;
+}
+
+export function TaskFormModal({ visible, members, onSave, onClose }: Props) {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState<typeof CATEGORIES[number]>("general");
   const [priority, setPriority] = useState<typeof PRIORITIES[number]>("medium");
   const [dueDate, setDueDate] = useState("");
   const [description, setDescription] = useState("");
+  const [assignedToId, setAssignedToId] = useState<string>("");
 
   function reset() {
     setTitle(""); setCategory("general"); setPriority("medium");
-    setDueDate(""); setDescription("");
+    setDueDate(""); setDescription(""); setAssignedToId("");
   }
 
   function handleSave() {
@@ -46,6 +54,7 @@ export function TaskFormModal({ visible, onSave, onClose }: Props) {
       priority,
       dueDate: dueDate || undefined,
       description: description.trim() || undefined,
+      assignedToId: assignedToId || undefined,
     });
     reset();
   }
@@ -67,7 +76,6 @@ export function TaskFormModal({ visible, onSave, onClose }: Props) {
         </View>
 
         <ScrollView contentContainerStyle={styles.form} keyboardShouldPersistTaps="handled">
-          {/* Title */}
           <TextInput
             style={styles.titleInput}
             value={title}
@@ -116,6 +124,34 @@ export function TaskFormModal({ visible, onSave, onClose }: Props) {
             ))}
           </View>
 
+          {/* Assign to */}
+          {members.length > 0 && (
+            <>
+              <Text style={styles.label}>Assign To <Text style={styles.optional}>(optional)</Text></Text>
+              <View style={styles.chipRow}>
+                <TouchableOpacity
+                  style={[styles.memberChip, assignedToId === "" && styles.memberChipActive]}
+                  onPress={() => setAssignedToId("")}
+                >
+                  <Text style={[styles.memberChipText, assignedToId === "" && styles.memberChipTextActive]}>
+                    Anyone
+                  </Text>
+                </TouchableOpacity>
+                {members.map(m => (
+                  <TouchableOpacity
+                    key={m.id}
+                    style={[styles.memberChip, assignedToId === m.id && styles.memberChipActive]}
+                    onPress={() => setAssignedToId(m.id)}
+                  >
+                    <Text style={[styles.memberChipText, assignedToId === m.id && styles.memberChipTextActive]}>
+                      {memberLabel(m)}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </>
+          )}
+
           {/* Due date */}
           <Text style={styles.label}>Due Date <Text style={styles.optional}>(optional)</Text></Text>
           <TextInput
@@ -158,12 +194,12 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 17, fontWeight: "600", color: "#1c1917" },
   cancel: { fontSize: 16, color: "#78716c" },
-  save: { fontSize: 16, fontWeight: "700", color: "#059669" },
+  save: { fontSize: 16, fontWeight: "700", color: "#d97706" },
   saveDisabled: { color: "#d6d3d1" },
   form: { padding: 20, gap: 4 },
   titleInput: {
     fontSize: 20, fontWeight: "600", color: "#1c1917",
-    borderBottomWidth: 2, borderBottomColor: "#059669",
+    borderBottomWidth: 2, borderBottomColor: "#d97706",
     paddingVertical: 12, marginBottom: 24,
   },
   label: { fontSize: 12, fontWeight: "600", color: "#78716c", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8, marginTop: 16 },
@@ -179,10 +215,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14, paddingVertical: 10, borderRadius: 20,
     backgroundColor: "#f5f5f4", borderWidth: 1, borderColor: "#e7e5e4",
   },
-  chipActive: { backgroundColor: "#ecfdf5", borderColor: "#059669" },
+  chipActive: { backgroundColor: "#fffbeb", borderColor: "#d97706" },
   chipIcon: { fontSize: 14 },
   chipText: { fontSize: 14, color: "#78716c" },
-  chipTextActive: { color: "#059669", fontWeight: "600" },
+  chipTextActive: { color: "#d97706", fontWeight: "600" },
   priorityRow: { flexDirection: "row", gap: 8 },
   priorityChip: {
     flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "center",
@@ -191,9 +227,16 @@ const styles = StyleSheet.create({
   },
   priorityDot: { width: 8, height: 8, borderRadius: 4 },
   priorityText: { fontSize: 14, color: "#78716c" },
-  offlineTip: {
-    marginTop: 24, backgroundColor: "#f0fdf4", borderRadius: 10,
-    padding: 12, borderWidth: 1, borderColor: "#bbf7d0",
+  memberChip: {
+    paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20,
+    backgroundColor: "#f5f5f4", borderWidth: 1, borderColor: "#e7e5e4",
   },
-  offlineTipText: { fontSize: 12, color: "#166534", textAlign: "center" },
+  memberChipActive: { backgroundColor: "#fffbeb", borderColor: "#d97706" },
+  memberChipText: { fontSize: 14, color: "#78716c" },
+  memberChipTextActive: { color: "#d97706", fontWeight: "600" },
+  offlineTip: {
+    marginTop: 24, backgroundColor: "#fffbeb", borderRadius: 10,
+    padding: 12, borderWidth: 1, borderColor: "#fde68a",
+  },
+  offlineTipText: { fontSize: 12, color: "#92400e", textAlign: "center" },
 });

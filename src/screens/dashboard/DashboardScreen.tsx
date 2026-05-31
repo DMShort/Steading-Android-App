@@ -45,12 +45,12 @@ export function DashboardScreen({ homestead }: { homestead: Homestead }) {
       style={styles.container}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#059669" />
+        <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#d97706" />
       }
     >
       <View style={styles.header}>
         <Text style={styles.homesteadName}>{homestead.name}</Text>
-        <Text style={styles.subtitle}>Your homestead at a glance</Text>
+        <Text style={styles.subtitle}>Your steading at a glance</Text>
       </View>
 
       <WeatherWidget homestead={homestead} />

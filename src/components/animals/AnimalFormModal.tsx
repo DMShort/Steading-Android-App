@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 17, fontWeight: "600", color: "#1c1917" },
   cancel: { fontSize: 16, color: "#78716c" },
-  save: { fontSize: 16, fontWeight: "600", color: "#059669" },
+  save: { fontSize: 16, fontWeight: "600", color: "#d97706" },
   saveDisabled: { color: "#d6d3d1" },
   form: { padding: 20, gap: 4 },
   label: { fontSize: 13, fontWeight: "600", color: "#78716c", marginBottom: 6, marginTop: 12, textTransform: "uppercase", letterSpacing: 0.4 },
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20,
     backgroundColor: "#f5f5f4", borderWidth: 1, borderColor: "#e7e5e4", marginRight: 8,
   },
-  chipActive: { backgroundColor: "#059669", borderColor: "#059669" },
+  chipActive: { backgroundColor: "#d97706", borderColor: "#d97706" },
   chipText: { fontSize: 14, color: "#78716c" },
   chipTextActive: { color: "#fff", fontWeight: "600" },
 });

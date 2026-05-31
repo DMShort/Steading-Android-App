@@ -48,7 +48,7 @@ export function LoginScreen({ onLoginSuccess, onGoToRegister }: Props) {
         <View style={styles.logo}>
           <Text style={styles.logoText}>🌱</Text>
         </View>
-        <Text style={styles.title}>Homestead</Text>
+        <Text style={styles.title}>Steading</Text>
         <Text style={styles.subtitle}>Sign in to your account</Text>
 
         <View style={styles.form}>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 20,
-    backgroundColor: "#059669",
+    backgroundColor: "#d97706",
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     color: "#1c1917",
   },
   button: {
-    backgroundColor: "#059669",
+    backgroundColor: "#d97706",
     borderRadius: 12,
     paddingVertical: 15,
     alignItems: "center",
@@ -144,5 +144,5 @@ const styles = StyleSheet.create({
   buttonDisabled: { opacity: 0.6 },
   buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
   link: { textAlign: "center", color: "#78716c", fontSize: 14 },
-  linkBold: { color: "#059669", fontWeight: "600" },
+  linkBold: { color: "#d97706", fontWeight: "600" },
 });

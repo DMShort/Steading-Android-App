@@ -133,7 +133,7 @@ export function PlantingFormModal({ visible, bedId, bedName, onSave, onClose }: 
         </View>
 
         {isLoading ? (
-          <ActivityIndicator color="#059669" style={styles.loader} />
+          <ActivityIndicator color="#d97706" style={styles.loader} />
         ) : (
           <FlatList
             data={filtered}
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 17, fontWeight: "600", color: "#1c1917" },
   subtitle: { fontSize: 12, color: "#78716c", marginTop: 1 },
   cancel: { fontSize: 16, color: "#78716c" },
-  save: { fontSize: 16, fontWeight: "700", color: "#059669" },
+  save: { fontSize: 16, fontWeight: "700", color: "#d97706" },
   saveDisabled: { color: "#d6d3d1" },
   metaRow: { flexDirection: "row", gap: 12, padding: 16, paddingBottom: 8, backgroundColor: "#fff", borderBottomWidth: 1, borderBottomColor: "#f5f5f4" },
   metaField: { flex: 1 },
@@ -185,20 +185,20 @@ const styles = StyleSheet.create({
     flex: 1, alignItems: "center", paddingVertical: 8, borderRadius: 8,
     backgroundColor: "#f5f5f4", borderWidth: 1, borderColor: "#e7e5e4",
   },
-  statusChipActive: { backgroundColor: "#ecfdf5", borderColor: "#059669" },
+  statusChipActive: { backgroundColor: "#f0fdfa", borderColor: "#0d9488" },
   statusText: { fontSize: 12, color: "#78716c" },
-  statusTextActive: { color: "#059669", fontWeight: "600" },
+  statusTextActive: { color: "#0d9488", fontWeight: "600" },
   dateInput: {
     backgroundColor: "#f5f5f4", borderRadius: 8, borderWidth: 1, borderColor: "#e7e5e4",
     paddingHorizontal: 10, paddingVertical: 9, fontSize: 14, color: "#1c1917",
   },
   selectedBanner: {
     flexDirection: "row", alignItems: "center", gap: 8,
-    backgroundColor: "#ecfdf5", paddingHorizontal: 16, paddingVertical: 10,
-    borderBottomWidth: 1, borderBottomColor: "#bbf7d0",
+    backgroundColor: "#f0fdfa", paddingHorizontal: 16, paddingVertical: 10,
+    borderBottomWidth: 1, borderBottomColor: "#99f6e4",
   },
   selectedEmoji: { fontSize: 20 },
-  selectedName: { flex: 1, fontSize: 15, fontWeight: "600", color: "#065f46" },
+  selectedName: { flex: 1, fontSize: 15, fontWeight: "600", color: "#0f766e" },
   clearCrop: { fontSize: 16, color: "#6b7280", padding: 4 },
   searchContainer: { paddingHorizontal: 16, paddingTop: 12, paddingBottom: 8, backgroundColor: "#fff" },
   searchInput: {
@@ -213,11 +213,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff", marginBottom: 6,
     borderWidth: 1, borderColor: "#e7e5e4",
   },
-  cropRowSelected: { backgroundColor: "#ecfdf5", borderColor: "#059669" },
+  cropRowSelected: { backgroundColor: "#f0fdfa", borderColor: "#0d9488" },
   cropEmoji: { fontSize: 22, width: 30, textAlign: "center" },
   cropInfo: { flex: 1 },
   cropName: { fontSize: 15, fontWeight: "500", color: "#1c1917" },
   cropCategory: { fontSize: 12, color: "#a8a29e", textTransform: "capitalize", marginTop: 1 },
-  checkmark: { fontSize: 16, color: "#059669", fontWeight: "700" },
+  checkmark: { fontSize: 16, color: "#0d9488", fontWeight: "700" },
   noResults: { textAlign: "center", color: "#a8a29e", marginTop: 24, fontSize: 14 },
 });

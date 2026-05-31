@@ -37,7 +37,7 @@ function MainTabs({ homestead }: { homestead: Homestead }) {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => <TabIcon name={route.name} focused={focused} />,
-        tabBarActiveTintColor: "#059669",
+        tabBarActiveTintColor: "#d97706",
         tabBarInactiveTintColor: "#a8a29e",
         tabBarStyle: { borderTopColor: "#e7e5e4" },
         headerStyle: { backgroundColor: "#fff" },

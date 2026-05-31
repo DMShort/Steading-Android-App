@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 17, fontWeight: "600", color: "#1c1917" },
   cancel: { fontSize: 16, color: "#78716c" },
-  save: { fontSize: 16, fontWeight: "600", color: "#059669" },
+  save: { fontSize: 16, fontWeight: "600", color: "#d97706" },
   saveDisabled: { color: "#d6d3d1" },
   form: { padding: 20, gap: 4 },
   label: { fontSize: 13, fontWeight: "600", color: "#78716c", marginBottom: 6, marginTop: 12, textTransform: "uppercase", letterSpacing: 0.4 },
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff", borderRadius: 10, borderWidth: 1, borderColor: "#e7e5e4",
     borderStyle: "dashed", padding: 18, alignItems: "center",
   },
-  receiptButtonText: { fontSize: 15, color: "#059669", fontWeight: "500" },
+  receiptButtonText: { fontSize: 15, color: "#d97706", fontWeight: "500" },
   receiptPreview: { borderRadius: 10, overflow: "hidden", borderWidth: 1, borderColor: "#e7e5e4" },
   receiptImage: { width: "100%", height: 200 },
   removeReceipt: {

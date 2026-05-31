@@ -87,6 +87,13 @@ export interface WeightRecord {
   date: string;
 }
 
+export interface Member {
+  id: string;
+  role: string;
+  displayName: string | null;
+  user: { id: string; name: string | null; email: string };
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -97,6 +104,8 @@ export interface Task {
   completed: boolean;
   completedAt?: string;
   recurring?: string;
+  assignedToId?: string | null;
+  assignedTo?: Member | null;
 }
 
 export interface Expense {

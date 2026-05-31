@@ -6,7 +6,7 @@ import {
 import type { Bed } from "../../types";
 
 const COLORS = [
-  "#16a34a", "#059669", "#0891b2", "#7c3aed", "#db2777",
+  "#16a34a", "#d97706", "#0891b2", "#7c3aed", "#db2777",
   "#ea580c", "#ca8a04", "#65a30d", "#0284c7", "#9333ea",
 ];
 
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 17, fontWeight: "600", color: "#1c1917" },
   cancel: { fontSize: 16, color: "#78716c" },
-  save: { fontSize: 16, fontWeight: "600", color: "#059669" },
+  save: { fontSize: 16, fontWeight: "600", color: "#d97706" },
   saveDisabled: { color: "#d6d3d1" },
   form: { padding: 20, gap: 4 },
   label: { fontSize: 13, fontWeight: "600", color: "#78716c", marginBottom: 6, marginTop: 12, textTransform: "uppercase", letterSpacing: 0.4 },

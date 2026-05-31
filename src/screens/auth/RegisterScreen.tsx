@@ -35,7 +35,7 @@ export function RegisterScreen({ onRegisterSuccess, onGoToLogin }: Props) {
       return;
     }
     if (mode === "create" && !homesteadName) {
-      Alert.alert("Missing field", "Please give your homestead a name.");
+      Alert.alert("Missing field", "Please give your steading a name.");
       return;
     }
     if (mode === "join" && !joinCode) {
@@ -70,7 +70,7 @@ export function RegisterScreen({ onRegisterSuccess, onGoToLogin }: Props) {
           <Text style={styles.logoText}>🌱</Text>
         </View>
         <Text style={styles.title}>Get started</Text>
-        <Text style={styles.subtitle}>Create a homestead or join one</Text>
+        <Text style={styles.subtitle}>Create a steading or join one</Text>
 
         {/* Mode toggle */}
         <View style={styles.toggle}>
@@ -105,7 +105,7 @@ export function RegisterScreen({ onRegisterSuccess, onGoToLogin }: Props) {
           {mode === "create" ? (
             <TextInput
               style={styles.input}
-              placeholder="Homestead name (e.g. Green Acres)"
+              placeholder="Steading name (e.g. Green Acres)"
               placeholderTextColor="#a8a29e"
               value={homesteadName}
               onChangeText={setHomesteadName}
@@ -143,7 +143,7 @@ export function RegisterScreen({ onRegisterSuccess, onGoToLogin }: Props) {
 
           {mode === "join" && (
             <Text style={styles.hint}>
-              Ask your homestead owner for the join code from Settings &amp; Members.
+              Ask your steading owner for the join code from Settings &amp; Members.
             </Text>
           )}
 
@@ -156,7 +156,7 @@ export function RegisterScreen({ onRegisterSuccess, onGoToLogin }: Props) {
               <ActivityIndicator color="#fff" />
             ) : (
               <Text style={styles.buttonText}>
-                {mode === "create" ? "Create Account" : "Join Homestead"}
+                {mode === "create" ? "Create Account" : "Join Steading"}
               </Text>
             )}
           </TouchableOpacity>
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 20,
-    backgroundColor: "#059669",
+    backgroundColor: "#d97706",
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   },
   toggleBtnActive: { backgroundColor: "#fff", shadowColor: "#000", shadowOpacity: 0.08, shadowRadius: 4, elevation: 2 },
   toggleText: { fontSize: 14, color: "#78716c", fontWeight: "500" },
-  toggleTextActive: { color: "#059669", fontWeight: "600" },
+  toggleTextActive: { color: "#d97706", fontWeight: "600" },
   form: { gap: 12, marginBottom: 24 },
   input: {
     backgroundColor: "#fff",
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   codeInput: { fontFamily: Platform.OS === "ios" ? "Courier" : "monospace", letterSpacing: 3 },
   hint: { fontSize: 12, color: "#a8a29e", textAlign: "center", marginTop: -4 },
   button: {
-    backgroundColor: "#059669",
+    backgroundColor: "#d97706",
     borderRadius: 12,
     paddingVertical: 15,
     alignItems: "center",
@@ -239,5 +239,5 @@ const styles = StyleSheet.create({
   buttonDisabled: { opacity: 0.6 },
   buttonText: { color: "#fff", fontSize: 16, fontWeight: "600" },
   link: { textAlign: "center", color: "#78716c", fontSize: 14 },
-  linkBold: { color: "#059669", fontWeight: "600" },
+  linkBold: { color: "#d97706", fontWeight: "600" },
 });

@@ -127,7 +127,7 @@ export function GardenScreen() {
         contentContainerStyle={styles.content}
         data={beds}
         keyExtractor={b => b.id}
-        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#059669" />}
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#d97706" />}
         ListHeaderComponent={
           <View>
             <Text style={styles.heading}>Garden</Text>
@@ -214,19 +214,19 @@ const styles = StyleSheet.create({
   bedCrops: { fontSize: 13, color: "#78716c", marginTop: 3 },
   bedEmpty: { fontSize: 13, color: "#d6d3d1", marginTop: 3 },
   bedRight: { alignItems: "flex-end" },
-  bedCount: { fontSize: 12, color: "#059669", fontWeight: "600", marginBottom: 6 },
+  bedCount: { fontSize: 12, color: "#d97706", fontWeight: "600", marginBottom: 6 },
   plantBtn: {
-    backgroundColor: "#ecfdf5", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 5,
-    borderWidth: 1, borderColor: "#bbf7d0",
+    backgroundColor: "#f0fdfa", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 5,
+    borderWidth: 1, borderColor: "#99f6e4",
   },
-  plantBtnText: { fontSize: 12, color: "#059669", fontWeight: "600" },
+  plantBtnText: { fontSize: 12, color: "#0d9488", fontWeight: "600" },
   empty: { alignItems: "center", padding: 40 },
   emptyText: { color: "#a8a29e", fontSize: 15, fontWeight: "500" },
   emptyHint: { color: "#d6d3d1", fontSize: 13, marginTop: 4 },
   fab: {
     position: "absolute", bottom: 24, right: 24,
     width: 56, height: 56, borderRadius: 28,
-    backgroundColor: "#059669", alignItems: "center", justifyContent: "center",
+    backgroundColor: "#d97706", alignItems: "center", justifyContent: "center",
     shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 4,
     elevation: 5,
   },
