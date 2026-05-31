@@ -135,4 +135,22 @@ export const api = {
   weather: {
     get: (lat: number, lon: number) => request(`/weather?lat=${lat}&lon=${lon}`),
   },
+
+  receipts: {
+    upload: async (localUri: string) => {
+      const filename = localUri.split("/").pop() ?? "receipt.jpg";
+      const match = /\.(\w+)$/.exec(filename);
+      const mimeType = match ? `image/${match[1]}` : "image/jpeg";
+
+      const formData = new FormData();
+      formData.append("file", { uri: localUri, name: filename, type: mimeType } as any);
+
+      const headers: Record<string, string> = { "Content-Type": "multipart/form-data" };
+      if (_token) headers["Authorization"] = `Bearer ${_token}`;
+
+      const res = await fetch(`${BASE_URL}/receipts/upload`, { method: "POST", headers, body: formData });
+      if (!res.ok) throw new Error("Receipt upload failed");
+      return res.json();
+    },
+  },
 };
