@@ -132,6 +132,12 @@ export const api = {
     list: () => request("/crops"),
   },
 
+  plantings: {
+    create: (data: object) => request("/beds", { method: "POST", body: JSON.stringify({ ...data, isPlanting: true }) }),
+    update: (id: string, data: object) => request(`/plantings/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
+    delete: (id: string) => request(`/plantings/${id}`, { method: "DELETE" }),
+  },
+
   weather: {
     get: (lat: number, lon: number) => request(`/weather?lat=${lat}&lon=${lon}`),
   },

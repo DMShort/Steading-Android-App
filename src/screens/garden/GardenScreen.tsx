@@ -7,12 +7,14 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../../services/api";
 import { enqueue } from "../../services/offlineQueue";
 import { BedFormModal } from "../../components/garden/BedFormModal";
-import type { Bed } from "../../types";
+import { PlantingFormModal } from "../../components/garden/PlantingFormModal";
+import type { Bed, Planting } from "../../types";
 
 export function GardenScreen() {
   const qc = useQueryClient();
   const [modalVisible, setModalVisible] = useState(false);
   const [editBed, setEditBed] = useState<Bed | null>(null);
+  const [plantingModal, setPlantingModal] = useState<{ bedId: string; bedName: string } | null>(null);
 
   const { data: beds = [], isRefetching, refetch } = useQuery({
     queryKey: ["beds"],
@@ -67,6 +69,31 @@ export function GardenScreen() {
     onSettled: () => qc.invalidateQueries({ queryKey: ["beds"] }),
   });
 
+  const createPlanting = useMutation({
+    mutationFn: (data: object) => api.plantings.create(data),
+    onMutate: async (data: any) => {
+      await qc.cancelQueries({ queryKey: ["beds"] });
+      const prev = qc.getQueryData<Bed[]>(["beds"]);
+      const optimistic: Planting = {
+        id: `tmp-${Date.now()}`,
+        bedId: data.bedId,
+        cropId: data.cropId,
+        startDate: data.startDate,
+        status: data.status,
+        crop: { id: data.cropId, name: "…", category: "", sowingMonths: [], harvestMonths: [] },
+      };
+      qc.setQueryData<Bed[]>(["beds"], old =>
+        (old ?? []).map(b => b.id === data.bedId ? { ...b, plantings: [...b.plantings, optimistic] } : b)
+      );
+      return { prev };
+    },
+    onError: async (_e, data, ctx) => {
+      if (ctx?.prev) qc.setQueryData(["beds"], ctx.prev);
+      await enqueue({ resource: "plantings", action: "create", data });
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: ["beds"] }),
+  });
+
   function handleSave(data: object) {
     if (editBed) {
       updateBed.mutate({ id: editBed.id, data });
@@ -75,6 +102,11 @@ export function GardenScreen() {
     }
     setModalVisible(false);
     setEditBed(null);
+  }
+
+  function handlePlantingSave(data: { bedId: string; cropId: string; startDate: string; status: string }) {
+    setPlantingModal(null);
+    createPlanting.mutate(data);
   }
 
   function confirmDelete(bed: Bed) {
@@ -122,7 +154,12 @@ export function GardenScreen() {
               </View>
               <View style={styles.bedRight}>
                 <Text style={styles.bedCount}>{growing.length} growing</Text>
-                <Text style={styles.editHint}>Tap to edit</Text>
+                <TouchableOpacity
+                  style={styles.plantBtn}
+                  onPress={() => setPlantingModal({ bedId: bed.id, bedName: bed.name })}
+                >
+                  <Text style={styles.plantBtnText}>🌱 Plant</Text>
+                </TouchableOpacity>
               </View>
             </TouchableOpacity>
           );
@@ -148,6 +185,14 @@ export function GardenScreen() {
         onSave={handleSave}
         onClose={() => { setModalVisible(false); setEditBed(null); }}
       />
+
+      <PlantingFormModal
+        visible={!!plantingModal}
+        bedId={plantingModal?.bedId ?? ""}
+        bedName={plantingModal?.bedName ?? ""}
+        onSave={handlePlantingSave}
+        onClose={() => setPlantingModal(null)}
+      />
     </View>
   );
 }
@@ -169,8 +214,12 @@ const styles = StyleSheet.create({
   bedCrops: { fontSize: 13, color: "#78716c", marginTop: 3 },
   bedEmpty: { fontSize: 13, color: "#d6d3d1", marginTop: 3 },
   bedRight: { alignItems: "flex-end" },
-  bedCount: { fontSize: 12, color: "#059669", fontWeight: "600" },
-  editHint: { fontSize: 10, color: "#d6d3d1", marginTop: 4 },
+  bedCount: { fontSize: 12, color: "#059669", fontWeight: "600", marginBottom: 6 },
+  plantBtn: {
+    backgroundColor: "#ecfdf5", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 5,
+    borderWidth: 1, borderColor: "#bbf7d0",
+  },
+  plantBtnText: { fontSize: 12, color: "#059669", fontWeight: "600" },
   empty: { alignItems: "center", padding: 40 },
   emptyText: { color: "#a8a29e", fontSize: 15, fontWeight: "500" },
   emptyHint: { color: "#d6d3d1", fontSize: 13, marginTop: 4 },

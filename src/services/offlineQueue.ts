@@ -63,9 +63,12 @@ async function executeMutation(m: QueuedMutation): Promise<void> {
     case "expenses:delete": return void await api.finances.deleteExpense(m.entityId!);
     case "income:create":   return void await api.finances.createIncome(m.data!);
     case "income:delete":   return void await api.finances.deleteIncome(m.entityId!);
-    case "tasks:create":    return void await api.tasks.create(m.data!);
-    case "tasks:update":    return void await api.tasks.update(m.entityId!, m.data!);
-    case "tasks:delete":    return void await api.tasks.delete(m.entityId!);
+    case "tasks:create":      return void await api.tasks.create(m.data!);
+    case "tasks:update":      return void await api.tasks.update(m.entityId!, m.data!);
+    case "tasks:delete":      return void await api.tasks.delete(m.entityId!);
+    case "plantings:create":  return void await api.plantings.create(m.data!);
+    case "plantings:update":  return void await api.plantings.update(m.entityId!, m.data!);
+    case "plantings:delete":  return void await api.plantings.delete(m.entityId!);
     default:
       throw new Error(`Unknown mutation: ${m.resource}:${m.action}`);
   }
