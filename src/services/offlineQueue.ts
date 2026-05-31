@@ -69,6 +69,11 @@ async function executeMutation(m: QueuedMutation): Promise<void> {
     case "plantings:create":  return void await api.plantings.create(m.data!);
     case "plantings:update":  return void await api.plantings.update(m.entityId!, m.data!);
     case "plantings:delete":  return void await api.plantings.delete(m.entityId!);
+    case "produce:create":    return void await api.produce.create(m.data!);
+    case "inventory:create":  return void await api.inventory.create(m.data!);
+    case "inventory:update":  return void await api.inventory.update(m.entityId!, m.data!);
+    case "seeds:create":      return void await api.seeds.create(m.data!);
+    case "seeds:update":      return void await api.seeds.update(m.entityId!, m.data!);
     default:
       throw new Error(`Unknown mutation: ${m.resource}:${m.action}`);
   }

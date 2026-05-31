@@ -11,24 +11,33 @@ import { GardenScreen } from "../screens/garden/GardenScreen";
 import { AnimalsScreen } from "../screens/animals/AnimalsScreen";
 import { TasksScreen } from "../screens/tasks/TasksScreen";
 import { FinancesScreen } from "../screens/finances/FinancesScreen";
+import { ProduceScreen } from "../screens/produce/ProduceScreen";
+import { InventoryScreen } from "../screens/inventory/InventoryScreen";
+import { SeedBankScreen } from "../screens/seeds/SeedBankScreen";
+import { MoreMenuScreen } from "../screens/more/MoreMenuScreen";
 import { useAuth, AuthContext, useAuthState } from "../hooks/useAuth";
 import type { Homestead } from "../types";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const MoreStack = createNativeStackNavigator();
 
 function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   const icons: Record<string, string> = {
-    Dashboard: "🏡",
-    Garden: "🌱",
-    Animals: "🐔",
-    Tasks: "✅",
-    Finances: "💰",
+    Dashboard: "🏡", Garden: "🌱", Animals: "🐔", Tasks: "✅", More: "⋯",
   };
+  return <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.5 }}>{icons[name] ?? "•"}</Text>;
+}
+
+function MoreNavigator() {
   return (
-    <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.5 }}>
-      {icons[name] ?? "•"}
-    </Text>
+    <MoreStack.Navigator screenOptions={{ headerStyle: { backgroundColor: "#fff" }, headerTintColor: "#1c1917", headerTitleStyle: { fontWeight: "700" } }}>
+      <MoreStack.Screen name="MoreMenu" component={MoreMenuScreen} options={{ title: "More" }} />
+      <MoreStack.Screen name="Produce" component={ProduceScreen} options={{ title: "Produce" }} />
+      <MoreStack.Screen name="Inventory" component={InventoryScreen} options={{ title: "Inventory" }} />
+      <MoreStack.Screen name="Seeds" component={SeedBankScreen} options={{ title: "Seed Bank" }} />
+      <MoreStack.Screen name="Finances" component={FinancesScreen} options={{ title: "Finances" }} />
+    </MoreStack.Navigator>
   );
 }
 
@@ -45,13 +54,13 @@ function MainTabs({ homestead }: { homestead: Homestead }) {
         headerTitleStyle: { fontWeight: "700" },
       })}
     >
-      <Tab.Screen name="Dashboard">
+      <Tab.Screen name="Dashboard" options={{ headerShown: false }}>
         {() => <DashboardScreen homestead={homestead} />}
       </Tab.Screen>
       <Tab.Screen name="Garden" component={GardenScreen} />
       <Tab.Screen name="Animals" component={AnimalsScreen} />
       <Tab.Screen name="Tasks" component={TasksScreen} />
-      <Tab.Screen name="Finances" component={FinancesScreen} />
+      <Tab.Screen name="More" component={MoreNavigator} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }
