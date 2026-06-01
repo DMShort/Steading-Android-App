@@ -31,24 +31,31 @@ export async function enqueue(mutation: Omit<QueuedMutation, "id" | "timestamp">
   await saveQueue(queue);
 }
 
-export async function flushQueue(onInvalidate?: () => void): Promise<void> {
+export interface FlushResult {
+  synced: number;
+  failed: number;
+}
+
+export async function flushQueue(onInvalidate?: () => void): Promise<FlushResult> {
   const queue = await getQueue();
-  if (queue.length === 0) return;
+  if (queue.length === 0) return { synced: 0, failed: 0 };
 
   const remaining: QueuedMutation[] = [];
-  let flushed = false;
+  let synced = 0;
 
   for (const mutation of queue) {
     try {
       await executeMutation(mutation);
-      flushed = true;
+      synced++;
     } catch {
       remaining.push(mutation);
     }
   }
 
   await saveQueue(remaining);
-  if (flushed) onInvalidate?.();
+  if (synced > 0) onInvalidate?.();
+
+  return { synced, failed: remaining.length };
 }
 
 async function executeMutation(m: QueuedMutation): Promise<void> {
