@@ -85,6 +85,8 @@ export const api = {
     update: (id: string, data: object) => request(`/tasks/${id}`, { method: "PATCH", body: JSON.stringify(data) }),
     delete: (id: string) => request(`/tasks/${id}`, { method: "DELETE" }),
     overdueCount: () => request<{ count: number }>("/tasks/overdue-count"),
+    submit: (id: string, data: object) => request(`/tasks/${id}/submit`, { method: "POST", body: JSON.stringify(data) }),
+    review: (id: string, data: object) => request(`/tasks/${id}/review`, { method: "POST", body: JSON.stringify(data) }),
   },
 
   finances: {

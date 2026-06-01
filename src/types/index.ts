@@ -94,6 +94,18 @@ export interface Member {
   user: { id: string; name: string | null; email: string };
 }
 
+export interface TaskSubmission {
+  id: string;
+  status: "pending" | "approved" | "rejected";
+  notes?: string | null;
+  logType?: string | null;
+  itemName?: string | null;
+  quantity?: number | null;
+  unit?: string | null;
+  createdAt: string;
+  submittedBy?: Member | null;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -106,6 +118,7 @@ export interface Task {
   recurring?: string;
   assignedToId?: string | null;
   assignedTo?: Member | null;
+  submission?: TaskSubmission | null;
 }
 
 export interface Expense {
