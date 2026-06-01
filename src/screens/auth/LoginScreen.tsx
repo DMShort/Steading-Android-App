@@ -11,7 +11,6 @@ import {
   Alert,
 } from "react-native";
 import { useAuth } from "../../hooks/useAuth";
-import { SteadingLogo } from "../../components/SteadingLogo";
 
 interface Props {
   onLoginSuccess: () => void;
@@ -46,8 +45,8 @@ export function LoginScreen({ onLoginSuccess, onGoToRegister }: Props) {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <View style={styles.inner}>
-        <View style={styles.logoMark}>
-          <SteadingLogo size={72} />
+        <View style={styles.logo}>
+          <Text style={styles.logoText}>🌱</Text>
         </View>
         <Text style={styles.title}>Steading</Text>
         <Text style={styles.subtitle}>Sign in to your account</Text>
@@ -100,7 +99,13 @@ export function LoginScreen({ onLoginSuccess, onGoToRegister }: Props) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fafaf9" },
   inner: { flex: 1, justifyContent: "center", paddingHorizontal: 24 },
-  logoMark: { alignSelf: "center", marginBottom: 16 },
+  logo: {
+    width: 72, height: 72, borderRadius: 20,
+    backgroundColor: "#d97706",
+    alignItems: "center", justifyContent: "center",
+    alignSelf: "center", marginBottom: 16,
+  },
+  logoText: { fontSize: 36 },
   title: {
     fontSize: 28,
     fontWeight: "700",

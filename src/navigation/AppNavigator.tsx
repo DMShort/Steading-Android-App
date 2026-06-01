@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, View } from "react-native";
 
 import { LoginScreen } from "../screens/auth/LoginScreen";
-import { SteadingLogo } from "../components/SteadingLogo";
 import { RegisterScreen } from "../screens/auth/RegisterScreen";
 import { DashboardScreen } from "../screens/dashboard/DashboardScreen";
 import { GardenScreen } from "../screens/garden/GardenScreen";
@@ -94,7 +93,7 @@ export function AppNavigator() {
       <NavigationContainer>
         {authState.loading ? (
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fafaf9" }}>
-            <SteadingLogo size={96} />
+            <Text style={{ fontSize: 64 }}>🌱</Text>
           </View>
         ) : authState.user && authState.homestead ? (
           <MainTabs homestead={authState.homestead} />
