@@ -33,7 +33,11 @@ export function WeatherWidget({ homestead }: { homestead: Homestead }) {
     gcTime: 1000 * 60 * 60 * 2,
   });
 
-  if (!latitude || !longitude) return null;
+  if (!latitude || !longitude) return (
+    <View style={styles.card}>
+      <Text style={styles.loading}>📍 Add your location in Settings to see local weather</Text>
+    </View>
+  );
   if (isLoading && !data) return (
     <View style={styles.card}>
       <Text style={styles.loading}>Loading weather…</Text>
